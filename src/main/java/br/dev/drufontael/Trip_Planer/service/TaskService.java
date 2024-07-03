@@ -34,7 +34,7 @@ public class TaskService {
     public List<TaskDto> getTasksByTrip(Long tripId) {
         Trip trip= tripRepository.findById(tripId)
                 .orElseThrow(() -> new ResourceNotFoundException("Trip not found with id " + tripId));
-        return taskRepository.findByTaskByTripOrderByDateAsc(trip).stream().map(this::toDto).toList();
+        return taskRepository.findByTripOrderByDateAsc(trip).stream().map(this::toDto).toList();
     }
 
     public TaskDto getTaskById(Long tripId, Long taskId) {
