@@ -17,31 +17,37 @@ classDiagram
         Long id
         String description
         boolean completed
+        LocalDate date
+        Trip trip
+        List~Expense~ expenses
+    }
+
+    class Expense {
+        Long id
         BigDecimal estimatedCost
         BigDecimal actualCost
         ExpenseCategory expenseCategory
-        Trip trip
-        LocalDate date
+        Task task
     }
 
-    class TripCategory {
-        <<enumeration>>
-        BUSINESS
-        TOURISM
-        VISIT
+class TripCategory {
+    <<enumeration>>
+BUSINESS
+TOURISM
+VISIT
+}
+
+class ExpenseCategory {
+    <<enumeration>>
+ACCOMMODATION
+TRANSPORTATION
+FOOD
+TICKETS
+SOUVENIRS
     }
 
-    class ExpenseCategory {
-        <<enumeration>>
-        ACCOMMODATION
-        TRANSPORTATION
-        FOOD
-        TICKETS
-        SOUVENIRS
-    }
-
-    Trip --> "1" TripCategory
-    Trip --> "0..*" Task
-    Task --> "1" Trip
-    Task --> "1" ExpenseCategory
+Trip "1"*-- "1" TripCategory
+Trip "1"*-- "0..*" Task
+Task "1"*-- "0..*" Expense
+Expense "1"*-- "1" ExpenseCategory
 ```

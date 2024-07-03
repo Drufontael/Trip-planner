@@ -1,11 +1,11 @@
 package br.dev.drufontael.Trip_Planer.model;
 
-import br.dev.drufontael.Trip_Planer.model.enuns.ExpenseCategory;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
@@ -16,23 +16,14 @@ public class Task implements Comparable<Task> {
 
     private String description;
     private boolean completed;
-
-    @Column(precision = 10, scale = 2, nullable = false)
-    private BigDecimal estimatedCost = BigDecimal.valueOf(0.00);
-
-    @Column(precision = 10, scale = 2, nullable = false)
-    private BigDecimal actualCost = BigDecimal.valueOf(0.00);
-
     private LocalDate date;
-
-    @Enumerated(EnumType.STRING)
-    private ExpenseCategory expenseCategory;
 
     @ManyToOne
     @JoinColumn(name = "trip_id")
     private Trip trip;
 
-    // Getters and Setters
+    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Expense> expenses = new ArrayList<>();
 
     @Override
     public int compareTo(Task other) {
