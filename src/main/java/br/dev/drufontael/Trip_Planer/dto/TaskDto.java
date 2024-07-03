@@ -10,6 +10,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TaskDto {
+    private Long id;
     private String description;
     private LocalDate date;
 }

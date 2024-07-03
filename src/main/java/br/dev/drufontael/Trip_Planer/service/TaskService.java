@@ -67,6 +67,6 @@ public class TaskService {
     }
 
     private TaskDto toDto(Task task) {
-        return new TaskDto(task.getDescription(), task.getDate());
+        return new TaskDto(task.getId(),task.getDescription(), task.getDate());
     }
 }

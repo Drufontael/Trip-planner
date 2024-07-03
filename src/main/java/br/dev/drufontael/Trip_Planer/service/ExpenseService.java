@@ -64,6 +64,6 @@ public class ExpenseService {
     }
 
     private ExpenseDto toDto(Expense expense) {
-        return new ExpenseDto(expense.getEstimatedCost(), expense.getActualCost(), expense.getExpenseCategory());
+        return new ExpenseDto(expense.getId(),expense.getEstimatedCost(), expense.getActualCost(), expense.getExpenseCategory());
     }
 }

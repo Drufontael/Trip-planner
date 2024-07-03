@@ -47,6 +47,6 @@ public class TripService {
     }
 
     private TripDto toDto(Trip trip) {
-        return new TripDto(trip.getName(), trip.getStartDate(), trip.getEndDate(), trip.getCategory());
+        return new TripDto(trip.getId(),trip.getName(), trip.getStartDate(), trip.getEndDate(), trip.getCategory());
     }
 }

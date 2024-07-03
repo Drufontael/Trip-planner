@@ -11,6 +11,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TripDto {
+    private Long id;
     private String name;
     private LocalDate startDate;
     private LocalDate endDate;

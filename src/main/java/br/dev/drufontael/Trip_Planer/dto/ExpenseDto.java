@@ -11,6 +11,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ExpenseDto {
+    private Long id;
     private BigDecimal estimatedCost;
     private BigDecimal actualCost;
     private ExpenseCategory expenseCategory;
