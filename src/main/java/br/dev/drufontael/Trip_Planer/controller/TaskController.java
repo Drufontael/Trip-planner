@@ -20,7 +20,7 @@ public class TaskController {
     @PostMapping
     public ResponseEntity<TaskDto> createTask(@PathVariable("tripId") Long tripId, @RequestBody TaskDto taskDto) {
         TaskDto newTaskDto=taskService.addTaskToTrip(tripId, taskDto);
-        URI location= ServletUriComponentsBuilder.fromCurrentRequest().path("{/{id}")
+        URI location= ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(newTaskDto.getId()).toUri();
         return ResponseEntity.created(location).body(newTaskDto);
     }

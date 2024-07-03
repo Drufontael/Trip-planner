@@ -21,7 +21,7 @@ public class ExpenseController {
     public ResponseEntity<ExpenseDto> createExpense(@PathVariable("tripId") Long tripId, @PathVariable("taskId") Long taskId,
                                                    @RequestBody ExpenseDto expenseDto) {
         ExpenseDto newExpenseDto=expenseService.addExpenseToTask(taskId, expenseDto);
-        URI location= ServletUriComponentsBuilder.fromCurrentRequest().path("{/id}")
+        URI location= ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(newExpenseDto.getId()).toUri();
         return ResponseEntity.created(location).body(newExpenseDto);
     }

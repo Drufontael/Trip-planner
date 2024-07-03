@@ -21,7 +21,7 @@ public class TripController {
     public ResponseEntity<TripDto> createTrip(@RequestBody TripDto tripDto) {
         TripDto newTripDto=tripService.createTrip(tripDto);
         URI location= ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("{id}").buildAndExpand(newTripDto.getId()).toUri();
+                .path("/{id}").buildAndExpand(newTripDto.getId()).toUri();
 
         return ResponseEntity.created(location).body(newTripDto);
     }
