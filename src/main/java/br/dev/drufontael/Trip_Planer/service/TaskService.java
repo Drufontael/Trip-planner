@@ -1,6 +1,7 @@
 package br.dev.drufontael.Trip_Planer.service;
 
 import br.dev.drufontael.Trip_Planer.dto.TaskDto;
+import br.dev.drufontael.Trip_Planer.exception.InvalidArgumentFormatException;
 import br.dev.drufontael.Trip_Planer.exception.ResourceNotFoundException;
 import br.dev.drufontael.Trip_Planer.model.Task;
 import br.dev.drufontael.Trip_Planer.model.Trip;
@@ -40,6 +41,11 @@ public class TaskService {
     public TaskDto getTaskById(Long tripId, Long taskId) {
         if (!tripRepository.existsById(tripId)) {
             throw new ResourceNotFoundException("Trip not found with id " + tripId);
+        }
+        Task task=taskRepository.findById(taskId).orElseThrow(() -> new ResourceNotFoundException("Task not found with id " + taskId));
+        if (!task.getTrip().getId().equals(tripId)){
+            throw new InvalidArgumentFormatException("There is no task with this ID "+taskId
+                    +" for a trip with this ID "+tripId);
         }
         return taskRepository.findById(taskId).map(this::toDto)
                 .orElseThrow(() -> new ResourceNotFoundException("Task not found with id " + taskId));

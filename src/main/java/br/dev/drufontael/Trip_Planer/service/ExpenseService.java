@@ -1,8 +1,10 @@
 package br.dev.drufontael.Trip_Planer.service;
 
 import br.dev.drufontael.Trip_Planer.dto.ExpenseDto;
+import br.dev.drufontael.Trip_Planer.exception.InvalidArgumentFormatException;
 import br.dev.drufontael.Trip_Planer.exception.ResourceNotFoundException;
 import br.dev.drufontael.Trip_Planer.model.Expense;
+import br.dev.drufontael.Trip_Planer.model.Task;
 import br.dev.drufontael.Trip_Planer.repository.ExpenseRepository;
 import br.dev.drufontael.Trip_Planer.repository.TaskRepository;
 import br.dev.drufontael.Trip_Planer.utils.Utils;
@@ -24,22 +26,27 @@ public class ExpenseService {
         return taskRepository.findById(taskId).map(task -> {
             Expense expense = new Expense();
             Utils.copyNonNullProperties(expenseDto,expense);
+            expense.setTask(task);
             return toDto(expenseRepository.save(expense));
         }).orElseThrow(() -> new ResourceNotFoundException("Task not found with id " + taskId));
     }
 
     public List<ExpenseDto> getExpensesByTask(Long taskId) {
-        return taskRepository.findById(taskId).map(expenseRepository::findByTask)
-                .orElseThrow(() -> new ResourceNotFoundException("Task not found with id " + taskId))
-                .stream().map(this::toDto).toList();
+        if(!taskRepository.existsById(taskId)) throw new ResourceNotFoundException("Task not found with id " + taskId);
+        return expenseRepository.findByTaskId(taskId).stream().map(this::toDto).toList();
     }
 
     public ExpenseDto getExpenseById(Long taskId, Long expenseId) {
         if (!taskRepository.existsById(taskId)) {
             throw new ResourceNotFoundException("Task not found with id " + taskId);
         }
-        return expenseRepository.findById(expenseId).map(this::toDto)
+        Expense expense=expenseRepository.findById(expenseId)
                 .orElseThrow(() -> new ResourceNotFoundException("Expense not found with id " + expenseId));
+        if(!expense.getTask().getId().equals(taskId)){
+            throw new InvalidArgumentFormatException("There is no expense with this ID "+expenseId
+                    +" for a task with this ID "+taskId);
+        }
+        return toDto(expense);
     }
 
     public ExpenseDto updateExpense(Long taskId, Long expenseId, ExpenseDto expenseDto) {
