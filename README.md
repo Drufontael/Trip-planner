@@ -113,4 +113,4 @@ Expense "1"*-- "1" ExpenseCategory
 - **Deletar Expense por ID:** `DELETE /trips/{tripId}/tasks/{taskId}/expenses/{expenseId}`
 
 ## Link do Deploy
-[Trip Planner - Railway](https://trip-planner-production-b484.up.railway.app)
+[Trip Planner - Railway](https://trip-planner-production-b484.up.railway.app/swagger-ui.html)
