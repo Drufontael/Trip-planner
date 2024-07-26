@@ -1,12 +1,16 @@
 package br.dev.drufontael.Trip_Planer.exception;
 
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
 
-import java.util.Date;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -38,4 +42,16 @@ public class GlobalExceptionHandler {
                 ex.getMessage(),request.getDescription(false));
         return new ResponseEntity<>(errorDetails,HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<?> MethodArgumentNotValidException(MethodArgumentNotValidException ex,WebRequest request){
+        List<String> errors=new ArrayList<>();
+        ex.getBindingResult().getAllErrors().forEach(error->errors.add(error.getDefaultMessage()));
+        ErrorResponse errorDetails=new ErrorResponse(new Date(),HttpStatus.BAD_REQUEST.toString(),
+                errors.toString(),request.getDescription(false));
+        return new ResponseEntity<>(errorDetails,HttpStatus.BAD_REQUEST);
+    }
+
+
+
 }
