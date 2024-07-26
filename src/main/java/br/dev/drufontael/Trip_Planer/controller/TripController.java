@@ -17,6 +17,7 @@ public class TripController {
 
     private final TripService tripService;
 
+
     @PostMapping
     public ResponseEntity<TripDto> createTrip(@RequestBody TripDto tripDto) {
         TripDto newTripDto=tripService.createTrip(tripDto);
