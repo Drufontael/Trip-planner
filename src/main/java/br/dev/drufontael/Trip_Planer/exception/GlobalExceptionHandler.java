@@ -31,4 +31,11 @@ public class GlobalExceptionHandler {
                 ex.getMessage(),request.getDescription(false));
         return new ResponseEntity<>(errorDetails,HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<?> illegalArgumentException(IllegalArgumentException ex,WebRequest request){
+        ErrorResponse errorDetails=new ErrorResponse(new Date(),HttpStatus.BAD_REQUEST.toString(),
+                ex.getMessage(),request.getDescription(false));
+        return new ResponseEntity<>(errorDetails,HttpStatus.BAD_REQUEST);
+    }
 }
