@@ -2,6 +2,7 @@ package br.dev.drufontael.Trip_Planer.controller;
 
 import br.dev.drufontael.Trip_Planer.dto.ExpenseDto;
 import br.dev.drufontael.Trip_Planer.service.ExpenseService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +20,7 @@ public class ExpenseController {
 
     @PostMapping
     public ResponseEntity<ExpenseDto> createExpense(@PathVariable("tripId") Long tripId, @PathVariable("taskId") Long taskId,
-                                                   @RequestBody ExpenseDto expenseDto) {
+                                                   @Valid @RequestBody ExpenseDto expenseDto) {
         ExpenseDto newExpenseDto=expenseService.addExpenseToTask(taskId, expenseDto);
         URI location= ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(newExpenseDto.getId()).toUri();

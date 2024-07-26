@@ -2,6 +2,7 @@ package br.dev.drufontael.Trip_Planer.controller;
 
 import br.dev.drufontael.Trip_Planer.dto.TaskDto;
 import br.dev.drufontael.Trip_Planer.service.TaskService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +19,7 @@ public class TaskController {
     private final TaskService taskService;
 
     @PostMapping
-    public ResponseEntity<TaskDto> createTask(@PathVariable("tripId") Long tripId, @RequestBody TaskDto taskDto) {
+    public ResponseEntity<TaskDto> createTask(@PathVariable("tripId") Long tripId,@Valid @RequestBody TaskDto taskDto) {
         TaskDto newTaskDto=taskService.addTaskToTrip(tripId, taskDto);
         URI location= ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(newTaskDto.getId()).toUri();

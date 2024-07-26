@@ -19,8 +19,8 @@ public class TripService {
     public TripDto createTrip(TripDto tripDto) {
         Trip trip = new Trip();
         Utils.copyNonNullProperties(tripDto,trip);
-        if(!trip.getStartDate().isBefore(trip.getEndDate())){
-            throw new IllegalArgumentException("Start date must be before end date");
+        if(!trip.getStartDate().isEqual(trip.getEndDate()) && !trip.getStartDate().isBefore(trip.getEndDate())){
+            throw new IllegalArgumentException("start date must be equal to or before the end date");
         }
         return toDto(tripRepository.save(trip));
     }

@@ -2,6 +2,7 @@ package br.dev.drufontael.Trip_Planer.controller;
 
 import br.dev.drufontael.Trip_Planer.dto.TripDto;
 import br.dev.drufontael.Trip_Planer.service.TripService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +20,7 @@ public class TripController {
 
 
     @PostMapping
-    public ResponseEntity<TripDto> createTrip(@RequestBody TripDto tripDto) {
+    public ResponseEntity<TripDto> createTrip(@Valid @RequestBody TripDto tripDto) {
         TripDto newTripDto=tripService.createTrip(tripDto);
         URI location= ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}").buildAndExpand(newTripDto.getId()).toUri();
