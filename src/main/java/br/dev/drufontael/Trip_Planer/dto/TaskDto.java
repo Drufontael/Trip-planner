@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Data
@@ -14,8 +15,10 @@ import java.time.LocalDate;
 public class TaskDto {
     private Long id;
     @NotNull(message = "Description cannot be null")
-    @Size(min = 1, max = 255, message = "Description must be between 1 and 255 characters")
+    @Size(min = 3, max = 255, message = "Description must be between 1 and 255 characters")
     private String description;
     @NotNull(message = "Date cannot be null")
     private LocalDate date;
+    private BigDecimal totalEstimatedCost;
+    private BigDecimal totalExpenses;
 }

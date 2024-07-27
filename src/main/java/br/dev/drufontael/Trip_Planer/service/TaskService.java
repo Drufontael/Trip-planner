@@ -26,6 +26,9 @@ public class TaskService {
         return tripRepository.findById(tripId).map(trip -> {
             Task task = new Task();
             task.setDescription(taskDto.getDescription());
+            if(taskDto.getDate().isBefore(trip.getStartDate()) || taskDto.getDate().isAfter(trip.getEndDate())){
+                throw new InvalidArgumentFormatException("The date must be between the trip's start date and end date");
+            }
             task.setDate(taskDto.getDate());
             task.setTrip(trip);
             return toDto(taskRepository.save(task));
@@ -73,6 +76,8 @@ public class TaskService {
     }
 
     private TaskDto toDto(Task task) {
-        return new TaskDto(task.getId(),task.getDescription(), task.getDate());
+
+        return new TaskDto(task.getId(),task.getDescription(), task.getDate(),
+                task.totalEstimatedCost(), task.totalExpenses());
     }
 }
