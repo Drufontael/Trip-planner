@@ -12,7 +12,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/trips/{tripId}/tasks")
+@RequestMapping("api/trips/{tripId}/tasks")
 @AllArgsConstructor
 public class TaskController {
 
