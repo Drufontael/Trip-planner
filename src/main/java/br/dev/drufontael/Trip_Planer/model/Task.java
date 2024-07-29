@@ -24,6 +24,10 @@ public class Task implements Comparable<Task> {
     @JoinColumn(name = "trip_id")
     private Trip trip;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     @OneToMany(mappedBy = "task", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Expense> expenses = new ArrayList<>();
 
