@@ -45,4 +45,6 @@ public class TaskController {
     public ResponseEntity<Boolean> deleteTaskById(@PathVariable("tripId") Long tripId, @PathVariable Long taskId) {
         return ResponseEntity.ok().body(taskService.deleteTaskById(tripId, taskId));
     }
+
+
 }
