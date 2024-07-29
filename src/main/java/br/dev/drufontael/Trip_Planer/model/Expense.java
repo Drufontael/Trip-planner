@@ -33,6 +33,6 @@ public class Expense {
     private Task task;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_username")
     private User user;
 }
