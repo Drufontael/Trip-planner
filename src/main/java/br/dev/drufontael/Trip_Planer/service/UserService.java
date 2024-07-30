@@ -31,7 +31,8 @@ public class UserService {
         repository.save(user);
     }
 
-    public User authenticateUser(User user) {
+    @Transactional
+    public User authenticateUser(UserDto user) {
         String username = user.getUsername();
         String password = user.getPassword();
         Optional<User> optionalUser = repository.findByUsername(username);

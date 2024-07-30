@@ -9,6 +9,7 @@ import br.dev.drufontael.Trip_Planer.repository.UserRepository;
 import br.dev.drufontael.Trip_Planer.utils.Utils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,7 @@ public class TripService {
     private final HttpServletRequest request;
     private final UserRepository userRepository;
 
+    @Transactional
     public TripDto createTrip(TripDto tripDto) {
         Trip trip = new Trip();
         Utils.copyNonNullProperties(tripDto,trip);

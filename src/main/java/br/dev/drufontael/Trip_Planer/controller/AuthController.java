@@ -20,8 +20,8 @@ public class AuthController {
     private final UserService service;
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody User user, HttpServletRequest request) {
-        user = service.authenticateUser(user);
+    public ResponseEntity<String> login(@RequestBody UserDto userDto, HttpServletRequest request) {
+        User user = service.authenticateUser(userDto);
         if (user != null) {
             HttpSession session = request.getSession();
             session.setAttribute("user", user);
