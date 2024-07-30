@@ -103,7 +103,7 @@ public class TaskService {
     private User getUserFromSession() {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
-        if (user == null) throw new ResourceNotFoundException("User not found");
+        if (user == null) throw new ResourceNotFoundException("There is no open session");
         return user;
     }
 

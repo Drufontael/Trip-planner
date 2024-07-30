@@ -19,6 +19,7 @@ classDiagram
         LocalDate startDate
         LocalDate endDate
         TripCategory category
+        User user
         List~Task~ tasks
     }
 
@@ -28,6 +29,7 @@ classDiagram
         boolean completed
         LocalDate date
         Trip trip
+        User user
         List~Expense~ expenses
     }
 
@@ -37,6 +39,13 @@ classDiagram
         BigDecimal actualCost
         ExpenseCategory expenseCategory
         Task task
+        User user
+    }
+    class User {
+        Long id
+        String username
+        String password
+        List~Trip~ trips
     }
 
 class TripCategory {
@@ -54,7 +63,7 @@ FOOD
 TICKETS
 SOUVENIRS
     }
-
+User "1"*--"0--*"Trip 
 Trip "1"*-- "1" TripCategory
 Trip "1"*-- "0..*" Task
 Task "1"*-- "0..*" Expense
@@ -91,6 +100,11 @@ Expense "1"*-- "1" ExpenseCategory
 
 ## Endpoints
 
+### Auth Endpoints
+- **Registrar Usuário:** `POST /api/register`
+- **Login:** `POST /api/login`
+- **Obter Sessão:** `GET /api/session`
+
 ### Trip Endpoints
 - **Criar Trip:** `POST /trips`
 - **Visualizar todas as Trips:** `GET /trips`
@@ -112,5 +126,39 @@ Expense "1"*-- "1" ExpenseCategory
 - **Atualizar Expense por ID:** `PUT /trips/{tripId}/tasks/{taskId}/expenses/{expenseId}`
 - **Deletar Expense por ID:** `DELETE /trips/{tripId}/tasks/{taskId}/expenses/{expenseId}`
 
+## Instruções para Uso
+
+Para usar a API, é necessário criar um usuário e fazer login para criar uma sessão. Com uma sessão ativa, o usuário poderá acessar as funcionalidades da API. Siga os passos abaixo:
+1. **Registrar Ususario:**
+- Endpoint: `POST /api/register`
+- Corpo da Requisição:
+```json
+{
+  "username": "seu_username",
+  "password": "sua_password"
+}
+```
+2. **Login:**
+- Endpoint: `POST /api/login`
+- Corpo da Requisição:
+```json
+{
+  "username": "seu_username",
+  "password": "sua_password"
+}
+```
+- Resposta:
+    - Status 200: Login bem-sucedido
+    - Status 400: Username ou password invalidos
+
+    
+
+
 ## Link do Deploy
 [Trip Planner - Railway](https://trip-planner-production-b484.up.railway.app/swagger-ui.html)
+
+## Alterações Recentes
+1. Criada a entidade "user" referente no banco de dados a "tb_user".
+2. Criado controle de registro e de login.
+3. Restringindo o acesso das trips aos usuários donos.
+4. Versão alterada de 0.0.1 para 1.0.0.

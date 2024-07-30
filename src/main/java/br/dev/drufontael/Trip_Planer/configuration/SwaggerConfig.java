@@ -12,7 +12,7 @@ public class SwaggerConfig {
         return new OpenAPI()
                 .info(new Info()
                         .title("Trip-planner API RestFull")
-                        .version("0.0.1-SNAPSHOT")
+                        .version("1.0.0-SNAPSHOT")
                         .description("API for a planner and tracker of travel activities and expenses")
                 );
     }

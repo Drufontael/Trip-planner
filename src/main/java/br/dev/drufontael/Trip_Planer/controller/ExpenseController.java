@@ -21,7 +21,7 @@ public class ExpenseController {
     @PostMapping
     public ResponseEntity<ExpenseDto> createExpense(@PathVariable("tripId") Long tripId, @PathVariable("taskId") Long taskId,
                                                    @Valid @RequestBody ExpenseDto expenseDto) {
-        ExpenseDto newExpenseDto=expenseService.addExpenseToTask(taskId, expenseDto);
+        ExpenseDto newExpenseDto=expenseService.addExpenseToTask(tripId,taskId, expenseDto);
         URI location= ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(newExpenseDto.getId()).toUri();
         return ResponseEntity.created(location).body(newExpenseDto);
@@ -29,24 +29,24 @@ public class ExpenseController {
 
     @GetMapping
     public ResponseEntity<List<ExpenseDto>> getAllExpensesByTask(@PathVariable("tripId") Long tripId, @PathVariable("taskId") Long taskId) {
-        return ResponseEntity.ok().body(expenseService.getExpensesByTask(taskId));
+        return ResponseEntity.ok().body(expenseService.getExpensesByTask(tripId,taskId));
     }
 
     @GetMapping("/{expenseId}")
     public ResponseEntity<ExpenseDto> getExpenseById(@PathVariable("tripId") Long tripId, @PathVariable("taskId") Long taskId,
                                      @PathVariable Long expenseId) {
-        return ResponseEntity.ok().body(expenseService.getExpenseById(taskId, expenseId));
+        return ResponseEntity.ok().body(expenseService.getExpenseById(tripId,taskId, expenseId));
     }
 
     @PutMapping("/{expenseId}")
     public ResponseEntity<ExpenseDto> updateExpenseById(@PathVariable("tripId") Long tripId, @PathVariable("taskId") Long taskId,
                                         @PathVariable Long expenseId, @RequestBody ExpenseDto expenseDto) {
-        return ResponseEntity.ok().body(expenseService.updateExpense(taskId, expenseId, expenseDto));
+        return ResponseEntity.ok().body(expenseService.updateExpense(tripId,taskId, expenseId, expenseDto));
     }
 
     @DeleteMapping("/{expenseId}")
     public ResponseEntity<Boolean> deleteExpenseById(@PathVariable("tripId") Long tripId, @PathVariable("taskId") Long taskId,
                                      @PathVariable Long expenseId) {
-        return ResponseEntity.ok().body(expenseService.deleteExpenseById(taskId, expenseId));
+        return ResponseEntity.ok().body(expenseService.deleteExpenseById(tripId,taskId, expenseId));
     }
 }
