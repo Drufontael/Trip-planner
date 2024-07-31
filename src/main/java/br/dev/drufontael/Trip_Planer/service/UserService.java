@@ -1,7 +1,9 @@
 package br.dev.drufontael.Trip_Planer.service;
 
 import br.dev.drufontael.Trip_Planer.dto.UserDto;
+import br.dev.drufontael.Trip_Planer.exception.InvalidDataException;
 import br.dev.drufontael.Trip_Planer.exception.ResourceAlreadyExistsException;
+import br.dev.drufontael.Trip_Planer.exception.ResourceNotFoundException;
 import br.dev.drufontael.Trip_Planer.model.User;
 import br.dev.drufontael.Trip_Planer.repository.UserRepository;
 import jakarta.transaction.Transactional;
@@ -35,12 +37,17 @@ public class UserService {
     public User authenticateUser(UserDto user) {
         String username = user.getUsername();
         String password = user.getPassword();
-        Optional<User> optionalUser = repository.findByUsername(username);
-        if (optionalUser.isPresent() && passwordEncoder.matches(password, optionalUser.get().getPassword())) {
-            return optionalUser.get();
-        }
-        return null;
+        User userFound =repository.findByUsername(username).map(user1->{
+            if(passwordEncoder.matches(password, user1.getPassword())) {
+                return user1;
+            }else {
+                throw new InvalidDataException("Incorrect password");
+            }
+        }).orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+        return userFound;
     }
+
 
 
 }
