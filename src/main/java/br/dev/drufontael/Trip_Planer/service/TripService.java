@@ -62,13 +62,12 @@ public class TripService {
     }
 
     public Boolean deleteTripById(Long id) {
-        tripRepository.findById(id).map(trip -> {
+        return tripRepository.findById(id).map(trip -> {
             if(!trip.getUser().getUsername().equals(getUserFromSession().getUsername()))
                 throw new ResourceNotFoundException("User not found in trip");
             tripRepository.delete(trip);
             return true;
-        });
-        return false;
+        }).orElse(false);
     }
 
     private User getUserFromSession() {
