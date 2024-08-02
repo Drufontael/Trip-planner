@@ -1,7 +1,6 @@
 package br.dev.drufontael.Trip_Planer.repository;
 
 import br.dev.drufontael.Trip_Planer.model.Expense;
-import br.dev.drufontael.Trip_Planer.model.Task;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

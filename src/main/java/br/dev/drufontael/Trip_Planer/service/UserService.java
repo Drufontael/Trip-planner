@@ -11,8 +11,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
 @AllArgsConstructor
 public class UserService {
@@ -37,15 +35,14 @@ public class UserService {
     public User authenticateUser(UserDto user) {
         String username = user.getUsername();
         String password = user.getPassword();
-        User userFound =repository.findByUsername(username).map(user1->{
+
+        return repository.findByUsername(username).map(user1->{
             if(passwordEncoder.matches(password, user1.getPassword())) {
                 return user1;
             }else {
                 throw new InvalidDataException("Incorrect password");
             }
         }).orElseThrow(() -> new ResourceNotFoundException("User not found"));
-
-        return userFound;
     }
 
 

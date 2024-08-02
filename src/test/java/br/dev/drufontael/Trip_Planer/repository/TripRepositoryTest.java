@@ -2,8 +2,6 @@ package br.dev.drufontael.Trip_Planer.repository;
 
 import br.dev.drufontael.Trip_Planer.model.Trip;
 import br.dev.drufontael.Trip_Planer.model.User;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +12,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
@@ -25,15 +23,11 @@ class TripRepositoryTest {
     private TripRepository tripRepository;
     @Autowired
     private UserRepository userRepository;
-    private User user;
-
-
-
 
 
     @Test
     void findByUser() {
-        user = new User("admin", "admin", new ArrayList<>());
+        User user = new User("admin", "admin", new ArrayList<>());
         userRepository.save(user);
         List<Trip> trips = new ArrayList<>();
         for(int i = 0; i < 10; i++) {

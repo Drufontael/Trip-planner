@@ -4,7 +4,6 @@ import br.dev.drufontael.Trip_Planer.dto.ExpenseDto;
 import br.dev.drufontael.Trip_Planer.exception.InvalidArgumentFormatException;
 import br.dev.drufontael.Trip_Planer.exception.ResourceNotFoundException;
 import br.dev.drufontael.Trip_Planer.model.Expense;
-import br.dev.drufontael.Trip_Planer.model.Task;
 import br.dev.drufontael.Trip_Planer.model.User;
 import br.dev.drufontael.Trip_Planer.repository.ExpenseRepository;
 import br.dev.drufontael.Trip_Planer.repository.TaskRepository;
@@ -15,7 +14,6 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
 
 @Service

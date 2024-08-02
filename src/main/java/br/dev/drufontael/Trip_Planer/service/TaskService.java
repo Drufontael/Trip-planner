@@ -87,17 +87,16 @@ public class TaskService {
     }
 
     public Boolean deleteTaskById(Long tripId, Long taskId) {
-        if (!tripRepository.existsById(tripId)) {
-            throw new ResourceNotFoundException("Trip not found with id " + tripId);
-        }
-        Task task = taskRepository.findById(taskId).orElseThrow(() -> new ResourceNotFoundException("Task not found with id " + taskId));
-        if (!task.getTrip().getId().equals(tripId)) {
-            throw new InvalidArgumentFormatException("There is no task with this ID " + taskId
-                    + " for a trip with this ID " + tripId);
-        } else {
-            taskRepository.deleteById(taskId);
+        return taskRepository.findById(taskId).map(task -> {
+            if (!task.getTrip().getId().equals(tripId)) {
+                throw new InvalidArgumentFormatException("There is no task with this ID " + taskId
+                        + " for a trip with this ID " + tripId);
+            }
+            if (!task.getUser().getUsername().equals(getUserFromSession().getUsername()))
+                throw new ResourceNotFoundException("task does not belong to the user");
+            taskRepository.delete(task);
             return true;
-        }
+        }).orElse(false);
     }
 
     private User getUserFromSession() {
